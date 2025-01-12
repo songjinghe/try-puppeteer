@@ -49,7 +49,6 @@ FROM alekzonder/puppeteer:latest
 
 # CMD ["node", "index.js"]
 
-RUN yarn global add express@4.16.4 \
- && yarn global add mime@2.3.1 \
- && yarn global add multer@1.4.1 \
- && yarn global add vm2@3.6.4 && yarn cache clean
+WORKDIR /app
+ADD index.js
+RUN yarn global add express@4.16.4 yarn cache clean
