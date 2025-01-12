@@ -11,17 +11,6 @@ process.on("unhandledRejection", (reason, p) => {
   process.exit(1);
 });
 
-if (!process.argv[2]) {
-  console.error("ERROR: no url arg\n");
-
-  console.info("for example:\n");
-  console.log("  docker run --shm-size 1G --rm -v /tmp:/screenshots \\");
-  console.log(
-    "  alekzonder/puppeteer:latest screenshot 'https://www.google.com'\n"
-  );
-  process.exit(1);
-}
-
 function sleep(ms) {
   ms = ms ? ms : 0;
   return new Promise((resolve) => {
@@ -112,7 +101,6 @@ app.get("/", (req, res, next) => {
 app.get(
   "/cleanup",
   catchAsyncErrors(async (req, res, next) => {
-    const browser = app.locals.browser;
     const pages = await browser.pages();
     await Promise.all(pages.map((page) => page.close()));
     res.status(200).send("All pages closed");
